@@ -1,0 +1,28 @@
+---
+title: "Create a Plot using Plotly"
+author: ""
+date: "2023-08-18"
+output: html_document
+---
+
+##   <span style="color:blue"> Introduction </span>
+
+In this project, I will use "Insectsprays" data to create a plot using plotly. The data set Insectsprays gives the counts of insects in agricultural experimental units treated with different insecticides.
+
+Loading required packages:
+```{r}
+library(plotly)
+data("InsectSprays")
+```
+
+## <span style="color:blue"> Get the summary of the data set </span>
+```{r}
+summary(InsectSprays)
+```
+
+## <span style="color:blue"> Plotting the data using plotly </span>
+```{r, echo=TRUE}
+trend <- aggregate(count~spray, data=InsectSprays, mean)
+fit <- lm(count~spray, data= trend)
+plot_ly(trend, x=~spray, y=~count, type="scatter", mode   = 'markers') %>% add_lines(x=~spray, y=fitted(fit))%>% layout(title="The Relationship between the Insect Sprays and Insect Count")
+```
